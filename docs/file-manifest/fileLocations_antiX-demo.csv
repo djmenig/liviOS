@@ -1,0 +1,15 @@
+"File in your ""files"" Folder",Destination inside the SquashFS Image
+.bash_profile,/home/demo/.bash_profile
+.bashrc,/home/demo/.bashrc
+.hushlogin,/home/demo/.hushlogin
+.linudore64_banner.sh,/usr/local/bin/.linudore64_banner.sh
+.Xresources,/home/demo/.Xresources
+1,/etc/runit/1
+autostart,/home/demo/.config/openbox/autostart
+grub,/etc/default/grub
+JuliaMono-Black.ttf,/home/demo/.fonts/JuliaMono-Black.ttf
+livios-splash-planets.png,/usr/share/images/livios-splash-planets.png
+rc.xml,/home/demo/.config/openbox/rc.xml
+run,/etc/runit/runsvdir/current/getty-tty1/run
+themerc,/home/demo/.themes/liviOS/openbox-3/themerc
+xinitrc,/etc/X11/xinit/xinitrc
