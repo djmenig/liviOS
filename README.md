@@ -11,9 +11,17 @@ The project is named after my daughter, Livi, and began as a way to give her a c
 - Retro C64‑inspired terminal experience  
 - Instant boot into Openbox  
 - Custom experience throughout (GRUB theme + splash screen + UI)  
-- Ultra‑lightweight (32‑bit compatible) - *antiX version only*
+- Ultra‑lightweight (32‑bit compatible) - *antiX Edition only*
 - Hyperfocused on UX providing a distraction‑free environment for education or fun
 - Multiple editions (antiX now, openSUSE planned)
+
+---
+
+## 📚 Documentation
+- [Overview](docs/overview.md)
+- [Architecture](docs/architecture.md)
+- [Roadmap](docs/roadmap.md)
+- [File Manifest](docs/file-manifest/README.md)
 
 ---
 
@@ -49,6 +57,7 @@ liviOS/
 │       └── scripts/
 │
 └── LICENSE
+
 ```
 
 ---
@@ -62,11 +71,8 @@ The first release of LiviOS, designed for older hardware and 32‑bit systems. I
 - C64‑themed URxvt  
 - Autologin + startx on tty1  
 - Runit service modifications  
-- Demo user environment
+- Demo user environment  
 - Curated set of lightweight applications installed via the build scripts
-
-Build instructions are located in:  
-`editions/antix/README.md`
 
 ---
 
@@ -77,14 +83,12 @@ The antiX Edition includes a complete file manifest documenting:
 - Their exact locations inside the root filesystem  
 - Their purpose and behavior  
 
-Located in:  
-`docs/file-manifest/`
+See: [File Manifest](docs/file-manifest/README.md)
 
 ---
 
 ## 🚀 Roadmap
-See:  
-`docs/roadmap.md`
+See: [Roadmap](docs/roadmap.md)
 
 ---
 
