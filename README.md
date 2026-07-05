@@ -87,6 +87,14 @@ See: [File Manifest](docs/file-manifest/README.md)
 
 ---
 
+## 📦 Release Status
+- antiX Edition: Active development (pre‑release)
+- openSUSE Edition: Planned
+- File manifest: Complete for antiX demo
+- Build pipeline: Under review (scripts not yet validated)
+
+---
+
 ## 🚀 Roadmap
 See: [Roadmap](docs/roadmap.md)
 
