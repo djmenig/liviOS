@@ -18,9 +18,11 @@ The project is named after my daughter, Livi, and began as a way to give her a c
 ---
 
 ## 📚 Documentation
-- [Overview](docs/overview.md)
+- [Project Overview](docs/overview.md)
 - [Architecture](docs/architecture.md)
 - [Roadmap](docs/roadmap.md)
+- [antiX Edition](editions/antix/README.md)
+- [openSUSE Edition](editions/openSUSE/README.md)
 - [File Manifest](docs/file-manifest/README.md)
 
 ---
@@ -46,6 +48,7 @@ liviOS/
 │
 ├── editions/
 │   ├── antix/                # antiX Edition (current)
+│   │   ├── README.md
 │   │   ├── rootfs/
 │   │   ├── scripts/
 │   │   └── build-iso.conf
