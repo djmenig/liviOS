@@ -21,7 +21,7 @@ else
 fi
 
 # Banner strings
-LINE1="**** LINUDORE64 liviOS V1 ****"
+LINE1="**** LINUDORE 64 liviOS V1 ****"
 LINE2="${TOTAL_DISP} RAM SYSTEM  ${AVAIL_DISP} BASIC BYTES FREE"
 
 # Centered text (Defaulting to 80x25 grid)
