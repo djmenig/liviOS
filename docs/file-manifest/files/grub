@@ -64,12 +64,19 @@ if [ -f /etc/lsb-release ]; then
 	GRUB_DISTRIBUTOR=`grep PRETTY_NAME /etc/lsb-release | cut -d= -f2 | cut -d\" -f2 2> /dev/null || echo Debian`
 fi
 
-if [ -f /usr/share/images/livios-splash-planets-1920x1080.png ]; then
-	GRUB_BACKGROUND=/usr/share/images/livios-splash-planets.png	
+# LiviOS Planets Splash Image
+#if [ -f /usr/share/images/livios-splash-planets-1920x1080.png ]; then
+#	GRUB_BACKGROUND=/usr/share/images/livios-splash-planets.png
+#fi
+
+# Linudore 64 LOADING Splash Image
+if [ -f /boot/grub/livios-grub-loading.png ]; then
+	GRUB_BACKGROUND=/boot/grub/livios-grub-loading.png
 fi
 
-if [ -e /boot/grub/themes/mx_linux/ ]; then
-	GRUB_THEME="/boot/grub/themes/mx_linux/theme.txt"
+# Linudore 64 GRUB Theme
+if [ -e /boot/grub/themes/linudore64/ ]; then
+	GRUB_THEME="/boot/grub/themes/linudore64/theme.txt"
 fi
 
 if [ -e /etc/default/grub.mx-defaults ]; then
