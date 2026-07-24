@@ -1,0 +1,51 @@
+# LINUDORE 64 GRUB Theme, made specifically for LiviOS
+#
+# Copyright (C) 2026 Donald J. Menig
+
+# Background Color: #253F9B (URxvt Background) ##############
+# Text Color: #738DE8 (URxvt Foreground) ####################
+
+# Desktop background (Image or Solid Color)
+desktop-image: "linudore64-bootmenu.png"
+#desktop-color: "#253F9B"
+
+# Title
+title-text: ""
+title-font: "Terminus (TTF) Regular 18"
+
+# Terminal
+terminal-font: "Terminus (TTF) Regular 12"
+terminal-left: "0"
+terminal-top: "0"
+terminal-width: "100%"
+terminal-height: "100%"
+terminal-border: "0"
+
+# Heading
++ label {
+    top = 12%
+    width = 100%
+    text = "LINUDORE 64 BOOT MENU"
+    color = "#738DE8"
+    align = "center"
+    font = "Terminus (TTF) Regular 20"
+}
+
+# Boot menu
++ boot_menu {
+    top = 25%
+    left = 20%
+    width = 60%
+    height = 42%
+    item_font = "Terminus (TTF) Regular 14"
+    item_color = "#738DE8"
+    selected_item_color = "#253F9B"
+    item_height = 32
+    item_padding = 0
+    item_spacing = 0
+    icon_width = 0
+    icon_height = 0
+    icon_spacing = 0
+    item_icon_space = 12
+    selected_item_pixmap_style = "selected_item_*.png"
+}
