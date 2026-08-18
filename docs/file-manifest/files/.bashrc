@@ -171,15 +171,15 @@ purewhite='\[\e[1;37m\]'# Color 15: Pure White
 nc='\[\e[0m\]'          # No Color (Reset)
 
 ### Custom banner
-if [ -f ~/.linudore64_banner.sh ]; then
-    ~/.linudore64_banner.sh
+if [ -f /usr/local/bin/.linudore64_banner.sh ]; then
+    /usr/local/bin/.linudore64_banner.sh
 fi
 
 # Override the 'clear' command so it also draws the C64 header
 clear() {
     command clear
-    if [ -f ~/.linudore64_banner.sh ]; then
-        ~/.linudore64_banner.sh
+    if [ -f /usr/local/bin/.linudore64_banner.sh ]; then
+        /usr/local/bin/.linudore64_banner.sh
     fi
 }
 
