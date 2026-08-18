@@ -3,6 +3,7 @@
 .bashrc,/home/demo/.bashrc
 .hushlogin,/home/demo/.hushlogin
 .linudore64_banner.sh,/usr/local/bin/.linudore64_banner.sh
+.livios-guide.sh,/usr/local/bin/.livios-guide.sh
 .Xresources,/home/demo/.Xresources
 1,/etc/runit/1
 autostart,/home/demo/.config/openbox/autostart

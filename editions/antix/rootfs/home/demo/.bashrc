@@ -212,3 +212,6 @@ load() {
         echo "${1^^} NOT FOUND"
     fi
 }
+
+# LiviOS Specific Aliases
+alias guide='/usr/local/bin/.livios-guide.sh'

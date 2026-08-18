@@ -55,6 +55,7 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     unclutter \
     xgalaga \
     gcompris-qt \
+    dialog \
     alsa-utils \
     libasound2-plugins \
     xfonts-base
@@ -92,6 +93,9 @@ echo "[in-chroot] Setting system file permissions..."
 
 # Banner script must be executable
 chmod 755 /usr/local/bin/.linudore64_banner.sh
+
+# Guide script must be executable
+chmod 755 /usr/local/bin/.livios-guide.sh
 
 # Splash image (readable by all)
 if [ -f /usr/share/images/livios-splash-planets.png ]; then

@@ -56,7 +56,10 @@ REQUIRED_FILES=(
     # C64 banner script
     "${OVERLAY}/usr/local/bin/.linudore64_banner.sh"
 
-    # Splash image (used by GRUB background + FIM framebuffer)
+    # LiviOS guide script
+    "${OVERLAY}/usr/local/bin/.livios-guide.sh"
+
+    # Splash image (used by FIM framebuffer)
     "${OVERLAY}/usr/share/images/livios-splash-planets.png"
 
     # Font
