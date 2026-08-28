@@ -13,9 +13,35 @@ focused on reproducibility, clarity, and thoughtful design.
 - Retro C64‑inspired terminal experience  
 - Instant boot into Openbox  
 - Unique custom UX throughout (GRUB theme, splash screen, terminal theme, Openbox layout)  
-- Ultra‑lightweight (32‑bit compatible) — *antiX Edition*  
+- Ultra‑lightweight, 32‑bit compatible — *antiX Edition*  
 - Distraction‑free environment for learning and exploration  
 - Multiple editions (antiX now, openSUSE planned)
+
+---
+
+## 📦 Delivery Models
+LiviOS is delivered differently per edition, based on the target hardware:
+
+- **antiX Edition (32‑bit): post‑install.** Because the target hardware is
+  constrained (older, low‑resource systems), LiviOS is **not** shipped as a live ISO.
+  Instead, you install a minimal **antiX‑core** system and then run the LiviOS
+  installer script, which copies all LiviOS files into place and configures the
+  boot experience. See [antiX Edition](editions/antix/README.md).
+- **openSUSE Edition (64‑bit): live ISO.** Planned as a KIWI‑based 64‑bit live
+  image build. See [openSUSE Edition](editions/opensuse/README.md).
+
+---
+
+## 💻 Quick Start (antiX Edition)
+1. Install a minimal **antiX‑core** system (32‑bit).
+2. Copy `editions/antix/install.sh` to the installed system.
+3. Run as root:
+   ```sh
+   ./install.sh
+   ```
+4. Reboot — you land on the C64‑themed Openbox desktop.
+
+The installer handles both **runit** and **sysvinit** init systems automatically.
 
 ---
 
@@ -29,27 +55,18 @@ focused on reproducibility, clarity, and thoughtful design.
 
 ---
 
-## 🧩 Editions
-### antiX Edition (current)
-Ultra‑lightweight, 32‑bit compatible, designed for older hardware and minimal systems.
-
-### openSUSE Edition (planned)
-Engineering‑grade, KIWI‑based build system. Directory structure reserved for future development.
-
----
-
 ## 🗂️ File Manifest
 The antiX Edition includes a complete file manifest documenting all custom LiviOS
-files and their exact locations inside the root filesystem. See:
+files and their exact installed locations. See:
 `docs/file-manifest/README.md`
 
 ---
 
 ## 📦 Release Status
-- antiX Edition: Active development (pre‑release)  
-- openSUSE Edition: Planned  
-- File manifest: Complete for antiX demo  
-- Build pipeline: Under review (scripts not yet validated)
+- antiX Edition: Active development (post‑install installer)  
+- openSUSE Edition: Planned (KIWI live ISO)  
+- File manifest: Complete for antiX  
+- Installer pipeline: Under review (not yet validated on real hardware)
 
 ---
 

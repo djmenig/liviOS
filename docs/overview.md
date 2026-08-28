@@ -14,8 +14,29 @@ The project is named after my daughter, Livi, and originally began by providing 
 
 LiviOS is developed in multiple editions:
 
-- **antiX Edition** — ultra‑lightweight, 32‑bit compatible, ideal for older hardware  
-- **openSUSE Edition** — engineering‑grade, 64‑bit, leveraging KIWI and modern tooling *(planned)*
+- **antiX Edition** — ultra‑lightweight, 32‑bit compatible, ideal for older hardware.
+  Delivered as a **post‑install installer** that runs on top of a minimal
+  antiX‑core system (no live ISO).
+- **openSUSE Edition** — engineering‑grade, 64‑bit, leveraging KIWI and modern
+  tooling, delivered as a **live ISO** *(planned)*.
+
+---
+
+## Delivery Models
+
+Each edition chooses a delivery model that fits its target hardware and tooling:
+
+- **antiX (32‑bit) — Installer model.** Resource‑constrained hardware makes a
+  full live ISO heavy and wasteful. Instead, the user installs a small
+  antiX‑core base and runs `install.sh`, which:
+  - installs the required packages,
+  - copies the LiviOS core files to their destinations (per the file manifest),
+  - configures the splash screen and tty1 autologin for **either** runit or
+    sysvinit,
+  - refreshes fonts and re‑runs `update-grub`.
+
+- **openSUSE (64‑bit) — Image model.** A normal KIWI‑based live ISO build,
+  produced on a build service (OBS). *(Planned.)*
 
 ---
 

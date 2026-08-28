@@ -1,0 +1,35 @@
+# LiviOS antiX (32-bit) packages
+# Installed by install.sh after a successful antiX-core system install.
+# One package per line; '#' starts a comment.
+
+# --- Desktop / window management ---
+openbox
+
+# --- Terminal (C64-themed URxvt) ---
+rxvt-unicode
+
+# --- X server stack ---
+xinit
+xserver-xorg
+xserver-xorg-legacy
+xserver-xorg-video-all
+xserver-xorg-input-all
+x11-xserver-utils
+
+# --- Boot splash (framebuffer viewer) ---
+fim
+
+# --- Utilities / polish ---
+unclutter
+dialog
+
+# --- Fonts ---
+xfonts-base
+
+# --- Sound ---
+alsa-utils
+libasound2-plugins
+
+# --- Curated applications ---
+xgalaga
+gcompris-qt

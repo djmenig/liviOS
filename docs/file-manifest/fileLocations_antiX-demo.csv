@@ -1,4 +1,4 @@
-"File in your ""files"" Folder",Destination inside the SquashFS Image
+"Source file","Installed path"
 .bash_profile,/home/demo/.bash_profile
 .bashrc,/home/demo/.bashrc
 .hushlogin,/home/demo/.hushlogin
@@ -9,6 +9,7 @@
 autostart,/home/demo/.config/openbox/autostart
 grub,/etc/default/grub
 JuliaMono-Black.ttf,/home/demo/.fonts/JuliaMono-Black.ttf
+livios-grub-loading.png,/boot/grub/livios-grub-loading.png
 livios-splash-planets.png,/usr/share/images/livios-splash-planets.png
 rc.xml,/home/demo/.config/openbox/rc.xml
 run,/etc/runit/runsvdir/current/getty-tty1/run
