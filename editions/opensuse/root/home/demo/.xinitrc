@@ -13,4 +13,9 @@
 
 [ -f "$HOME/.Xresources" ] && xrdb -merge "$HOME/.Xresources"
 
+# Yield the VT from plymouth to X (if plymouth was active during initrd).
+# --retain-splash keeps the splash visible until X is ready; plymouth will
+# quit automatically once it detects the X server has taken over the VT.
+plymouth quit --retain-splash 2>/dev/null
+
 exec openbox-session

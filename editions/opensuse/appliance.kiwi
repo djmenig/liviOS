@@ -19,9 +19,9 @@
              rd.kiwi.allow_plymouth keeps plymouth active in the live initrd (KIWI
              stops it by default), so the splash shows during the initrd phase. -->
         <bootsplash-theme>bgrt</bootsplash-theme>
-        <!-- 'linudore64' is the custom GRUB theme shipped in root/boot/grub2/themes/;
-             KIWI generates the live-ISO grub.cfg with GRUB_THEME=/boot/grub2/themes/<this>/theme.txt
-             and copies that theme dir onto the ISO boot area. -->
+        <!-- 'linudore64' is the custom GRUB theme shipped in root/usr/share/grub2/themes/;
+             KIWI searches /usr/share/grub2/themes/<name> and copies it to the ISO boot area.
+             The live grub.cfg references it at /boot/grub2/themes/linudore64/theme.txt. -->
         <bootloader-theme>linudore64</bootloader-theme>
         <type image="iso" flags="overlay" firmware="efi" kernelcmdline="quiet loglevel=0 vt.global_cursor_default=0 vt.cur_default=6 console=tty2 splash rd.kiwi.allow_plymouth" hybridpersistent_filesystem="ext4" hybridpersistent="true">
             <bootloader name="grub2" timeout="2"/>
@@ -42,6 +42,13 @@
          not carried into the running system's zypper repository list. -->
     <repository type="rpm-md" imageonly="true">
         <source path="https://download.opensuse.org/repositories/games/15.6/"/>
+    </repository>
+
+    <!-- LiviOS local repository: provides GDash (built from source).
+         Run packages/gdash/build-gdash-rpm.sh before building the ISO.
+         Kept imageonly="true" like the games repo. -->
+    <repository type="rpm-md" imageonly="true">
+        <source path="file:///home/djmenig/Code-Playground/djmenig/liviOS/liviOS-repo-root/packages/gdash/repo"/>
     </repository>
 
     <!-- Live ISO / boot stack + LiviOS dependencies (see packages.list) -->
@@ -91,6 +98,12 @@
         <package name="python311-pyxdg"/>
         <package name="alsa-utils"/>
         <package name="gcompris-qt"/>
+        <!-- gcompris-qt runtime deps: QtQuick.Controls 2.x (openSUSE packaging gap) -->
+        <package name="libqt5-qtquickcontrols2"/>
+        <package name="libqt5-qtquickcontrols"/>
+        <package name="qqc2-desktop-style"/>
+        <!-- GDash: Boulder Dash clone (built from source, see packages/gdash/) -->
+        <package name="gdash"/>
         <package name="xgalaga-sdl"/>
     </packages>
 

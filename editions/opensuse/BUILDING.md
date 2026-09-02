@@ -125,7 +125,7 @@ Before running the build, confirm the edition is in a consistent state:
 | `rd.kiwi.allow_plymouth` | On kernel cmdline (keeps splash in live initrd) | `grep 'rd.kiwi.allow_plymouth' editions/opensuse/appliance.kiwi` |
 | `plymouth-plugin-script` | In the `image` package list | `grep plymouth-plugin-script editions/opensuse/appliance.kiwi` |
 | `sudo` + `python311-pyxdg` | In the `image` package list | `grep -E 'sudo\|pyxdg' editions/opensuse/appliance.kiwi` |
-| GRUB theme at `grub2` path | Theme files under `root/boot/grub2/themes/linudore64/` | `ls editions/opensuse/root/boot/grub2/themes/linudore64/theme.txt` |
+| GRUB theme at `usr/share/grub2` path | Theme files under `root/usr/share/grub2/themes/linudore64/` | `ls editions/opensuse/root/usr/share/grub2/themes/linudore64/theme.txt` |
 | `plymouthd.conf` | Static daemon config selecting `livios` | `cat editions/opensuse/root/etc/plymouth/plymouthd.conf` |
 | `.Xresources` clean | No antiX `# include` lines (they break xrdb) | `grep -c '# include' editions/opensuse/root/home/demo/.Xresources` (expect `0`) |
 | `.xinitrc` xrdb merge | Runs `xrdb -merge` before `exec openbox-session` | `grep 'xrdb' editions/opensuse/root/home/demo/.xinitrc` |
@@ -250,7 +250,7 @@ section of the edition [`README.md`](README.md).
 | OpenSUSE *games* repo trouble | The games repo is declared `imageonly`, so it must be reachable during the build but is not carried into the image. If a mirror is down, pass `--ignore-repos-used-for-build` to make it non-fatal (provided `xgalaga-sdl` is otherwise resolvable) |
 | Xorg does not start in QEMU (black screen / no tty7) | Add `xorg-x11-driver-video` (or ensure QEMU's `modesetting`/`qxl` driver is present). Check `~demo/.local/share/xorg/Xorg.0.log` (or `/var/log/Xorg.0.log`) for the failing driver |
 | plymouth `livios` theme does not render | Verify `/usr/share/plymouth/themes/livios/` exists, `plymouth-plugin-script` is installed (the `script` module the theme needs), `plymouth-set-default-theme livios` ran in `config.sh`, and `rd.kiwi.allow_plymouth` is on the kernel cmdline (KIWI stops plymouth in the initrd by default). Fall back to the `bgrt` theme by editing `/etc/plymouth/plymouthd.conf` |
-| GRUB theme missing / plain menu | The theme must live at `/boot/grub2/themes/linudore64/` in the overlay and `<bootloader-theme>linudore64</bootloader-theme>` must be set in `appliance.kiwi`. KIWI regenerates the live-ISO `grub.cfg` and overwrites `/etc/default/grub`, so only those two matter for the ISO |
+| GRUB theme missing / plain menu | The theme must live at `/usr/share/grub2/themes/linudore64/` in the overlay (KIWI searches this path) and `<bootloader-theme>linudore64</bootloader-theme>` must be set in `appliance.kiwi`. KIWI copies the theme to the ISO boot area and overwrites `/etc/default/grub` |
 | URxvt colors/font not applied | `.Xresources` must not contain Debian/antiX `# include` lines (they break xrdb's cpp preprocessor) and `.xinitrc` must run `xrdb -merge ~/.Xresources` before `openbox-session` |
 | `demo` dotfiles owned by root in image | `config.sh` chowns `/home/demo` after the overlay is applied; confirm that step ran (early post-boot errors usually point here) |
 

@@ -45,8 +45,15 @@ fi
 # system (dracut) initrd and config in sync with what plymouthd reads.
 if [ -d /usr/share/plymouth/themes/livios ] && \
    command -v plymouth-set-default-theme >/dev/null 2>&1 ; then
-    plymouth-set-default-theme livios >/dev/null 2>&1 || true
+    if plymouth-set-default-theme livios >/tmp/plymouth-theme.log 2>&1 ; then
+        echo "[config.sh] plymouth theme registered: livios"
+    else
+        echo "[config.sh] WARNING: plymouth-set-default-theme livios failed:" >&2
+        cat /tmp/plymouth-theme.log >&2
+        echo "[config.sh] The static /etc/plymouth/plymouthd.conf still selects livios." >&2
+    fi
 else
+    echo "[config.sh] plymouth theme dir or plymouth-set-default-theme not found; writing fallback plymouthd.conf" >&2
     cat > /etc/plymouth/plymouthd.conf <<'EOF'
 [Daemon]
 Theme=livios
@@ -58,9 +65,10 @@ fi
 # GRUB
 # ---------------------------------------------------------------------------
 # The custom Linudore 64 GRUB theme is shipped in the overlay at
-# /boot/grub2/themes/linudore64 and selected via <bootloader-theme> in
-# appliance.kiwi (KIWI regenerates the live-ISO grub.cfg against it). The
-# /etc/default/grub overlay sets the matching theme/background paths.
+# /usr/share/grub2/themes/linudore64 and selected via <bootloader-theme> in
+# appliance.kiwi. KIWI searches /usr/share/grub2/themes/ for the theme dir
+# and copies it to the ISO boot area; the live grub.cfg references it from
+# /boot/grub2/themes/<bootloader-theme>/theme.txt at runtime.
 update-bootloader --refresh 2>/dev/null || true
 
 # ---------------------------------------------------------------------------

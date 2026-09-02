@@ -40,7 +40,7 @@ grep 'bootloader-theme.*linudore64' editions/opensuse/appliance.kiwi            
 grep 'rd.kiwi.allow_plymouth' editions/opensuse/appliance.kiwi                     # splash in initrd
 grep plymouth-plugin-script editions/opensuse/appliance.kiwi                        # script plugin
 grep -E 'sudo|pyxdg' editions/opensuse/appliance.kiwi                              # sudo + xdg
-ls editions/opensuse/root/boot/grub2/themes/linudore64/theme.txt                    # theme at grub2 path
+ls editions/opensuse/root/usr/share/grub2/themes/linudore64/theme.txt           # theme at standard path
 grep '# include' editions/opensuse/root/home/demo/.Xresources || echo "no antiX includes (good)"
 grep xrdb editions/opensuse/root/home/demo/.xinitrc                                # xrdb merge present
 find editions/opensuse/root -type f | wc -l                                        # 28 overlay files

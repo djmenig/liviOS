@@ -89,7 +89,7 @@ editions/opensuse/
 ├── config.sh           # chroot customizations run at end of 'prepare'
 ├── packages.list       # openSUSE RPM package list (mirrors appliance.kiwi)
 ├── root/               # filesystem overlay (applied into the image)
-│   ├── boot/grub2/themes/linudore64/  # custom GRUB theme (KIWI copies it to ISO boot)
+│   ├── usr/share/grub2/themes/linudore64/  # custom GRUB theme (KIWI copies it to ISO boot)
 │   ├── boot/grub/livios-grub-loading.png  # GRUB loading background
 │   ├── etc/default/grub        # openSUSE-flavored GRUB config
 │   ├── etc/plymouth/plymouthd.conf  # selects the 'livios' splash theme
@@ -138,7 +138,7 @@ Mapping (source → overlay destination):
 | `files/JuliaMono-Black.ttf` | `root/home/demo/.fonts/` |
 | `files/livios-grub-loading.png` | `root/boot/grub/` |
 | `files/livios-splash-planets.png` | `root/usr/share/images/` + plymouth theme |
-| `assets/grub/linudore64/` | `root/boot/grub2/themes/linudore64/` |
+| `assets/grub/linudore64/` | `root/usr/share/grub2/themes/linudore64/` |
 
 openSUSE-specific overlay files (no shared/antiX source):
 
@@ -161,7 +161,7 @@ Here is exactly how the openSUSE edition reproduces each behavior:
 
 | antiX behavior | antiX mechanism | openSUSE mechanism |
 |---|---|---|
-| Custom GRUB theme + hidden menu | `/etc/default/grub` (antiX/MX flavor) | `<bootloader-theme>linudore64</bootloader-theme>` + `assets/grub/linudore64` at `/boot/grub2/themes/` |
+| Custom GRUB theme + hidden menu | `/etc/default/grub` (antiX/MX flavor) | `<bootloader-theme>linudore64</bootloader-theme>` + theme at `/usr/share/grub2/themes/` |
 | Boot splash (planet image, 4 s) | runit `/etc/runit/1` runs `fim` | plymouth custom theme `livios` + `plymouth-plugin-script`; `rd.kiwi.allow_plymouth` keeps it in the live initrd; no `fim` |
 | tty1 autologin | runit getty `run` script (`agetty --autologin olivia`) or sysvinit `inittab` | `getty@tty1.service.d/autologin.conf` (`agetty --autologin demo`) |
 | Auto-start X on tty1 | `~/.bash_profile` → `exec startx` | `~/.bash_profile` → `exec startx` (same), plus `~/.xinitrc` |
@@ -196,6 +196,14 @@ plymouth active inside the live initrd (KIWI stops it there by default).
 `xgalaga-sdl` is not in the main OSS repo; it comes from the openSUSE **games**
 repository, which is added as a second `<repository>` in `appliance.kiwi`.
 
+### GDash (built from source)
+
+GDash is a Boulder Dash clone not packaged in any openSUSE repository. The
+LiviOS edition builds it from a git snapshot via `packages/gdash/`. Run
+`packages/gdash/build-gdash-rpm.sh` before building the ISO — it produces a
+local RPM-MD repo that KIWI consumes. **To-do:** publish GDash in the future
+LiviOS OBS project.
+
 ### Release choice: Leap 15.6 (not 16.0)
 
 openSUSE **Leap 16.0** removed the standalone X.org server (only Wayland, with
@@ -213,5 +221,5 @@ drivers are first-class.
 - **C64-themed URxvt terminal** — blue background, light-blue text, JuliaMono
 - **Autologin + startx on tty1** — lands directly on the desktop
 - **Demo user** (`demo`) with the full LiviOS dotfile set
-- **Curated applications** — xgalaga-sdl, gcompris-qt (educational)
+- **Curated applications** — xgalaga-sdl, gdash (Boulder Dash clone), gcompris-qt (educational)
 - **Sound** — ALSA utilities
