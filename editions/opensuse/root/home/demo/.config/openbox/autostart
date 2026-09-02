@@ -1,0 +1,5 @@
+xsetroot -solid "#738DE8" &
+
+unclutter -idle 1 &
+
+urxvt -geometry 80x25 -sb &

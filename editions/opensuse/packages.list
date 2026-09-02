@@ -1,0 +1,66 @@
+# LiviOS openSUSE (Leap 15.6, x86_64) packages
+# Live ISO built with KIWI NG. These are the openSUSE RPM equivalents of the
+# antiX (APT) package set, plus the live/boot stack required by KIWI.
+# One package per line; '#' starts a comment.
+#
+# NOTE: This list mirrors editions/opensuse/appliance.kiwi. Keep them in sync.
+
+# --- Live ISO / boot stack (KIWI required) ---
+kernel-default
+kernel-firmware-all
+dracut
+dracut-kiwi-live
+grub2
+grub2-x86_64-efi
+grub2-i386-pc
+grub2-branding-openSUSE
+shim
+systemd
+plymouth
+plymouth-theme-bgrt
+plymouth-branding-openSUSE
+timezone
+tar
+which
+procps
+iputils
+iproute2
+less
+bash-completion
+dhcp-client
+fontconfig
+fonts-config
+patterns-openSUSE-base
+
+# --- Desktop / window management ---
+openbox
+
+# --- Terminal (C64-themed URxvt) ---
+rxvt-unicode
+
+# --- X server stack (openSUSE Leap 15.6 = Xorg, first-class) ---
+xinit          # provides startx
+xterm-bin      # required by xinit
+xorg-x11-server
+xorg-x11-essentials  # xsetroot, xset, xrdb, xauth, etc.
+xorg-x11-driver-video
+xorg-x11-driver-input
+
+# --- Boot splash (plymouth; fim not available in openSUSE OSS) ---
+plymouth
+plymouth-theme-bgrt
+plymouth-branding-openSUSE
+
+# --- Utilities / polish ---
+unclutter
+dialog
+
+# --- Fonts ---
+xorg-x11-fonts
+
+# --- Sound ---
+alsa-utils
+
+# --- Curated applications ---
+xgalaga        # in the openSUSE 'games' repo (added in appliance.kiwi)
+gcompris-qt

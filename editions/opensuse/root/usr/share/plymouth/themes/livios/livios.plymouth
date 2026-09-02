@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=LiviOS
+Description=LiviOS boot splash (Linudore 64)
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/livios
+ScriptFile=/usr/share/plymouth/themes/livios/livios.script

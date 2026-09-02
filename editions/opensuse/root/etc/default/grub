@@ -1,0 +1,27 @@
+# LiviOS openSUSE edition - /etc/default/grub
+#
+# This is the openSUSE flavor of the LiviOS GRUB config. It differs from the
+# antiX edition's /etc/default/grub because openSUSE uses grub2-mkconfig /
+# grub2-set-default (not update-grub) and does not ship antiX/MX helpers such
+# as 'init-diversity', '/etc/lsb-release' or '/etc/default/grub.mx-defaults'.
+#
+# After changing this file run:
+#     grub2-mkconfig -o /boot/grub2/grub.cfg
+# (or 'update-bootloader --refresh').
+
+GRUB_DEFAULT=0
+GRUB_TIMEOUT=2
+GRUB_TIMEOUT_STYLE=hidden
+GRUB_DISTRIBUTOR="LiviOS"
+GRUB_CMDLINE_LINUX_DEFAULT="quiet loglevel=0 vt.global_cursor_default=0 vt.cur_default=6 console=tty2 splash"
+GRUB_CMDLINE_LINUX=""
+
+# Linudore 64 LOADING splash image (GRUB background)
+if [ -f /boot/grub/themes/linudore64/linudore64-bootmenu.png ]; then
+    GRUB_BACKGROUND=/boot/grub/themes/linudore64/linudore64-bootmenu.png
+fi
+
+# Linudore 64 GRUB theme
+if [ -d /boot/grub/themes/linudore64/ ]; then
+    GRUB_THEME="/boot/grub/themes/linudore64/theme.txt"
+fi

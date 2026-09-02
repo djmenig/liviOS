@@ -1,0 +1,20 @@
+# LiviOS plymouth theme script
+#
+# Displays the LiviOS 'Linudore 64' planet splash image full-screen during
+# boot, using the plymouth 'script' module. Falls back to the Linudore 64
+# background color if the image cannot be loaded.
+
+bg_image = Image("background.png");
+if (bg_image) {
+    sprite = Sprite();
+    sprite.SetImage(bg_image);
+    sprite.SetOpacity(1.0);
+    w = Window.GetWidth();
+    h = Window.GetHeight();
+    sprite.SetPosition(0, 0, w, h);
+    sprite.SetZ(1);
+} else {
+    # Linudore 64 base color: #253F9B
+    Window.SetBackgroundTopColor(0.145, 0.231, 0.608);
+    Window.SetBackgroundBottomColor(0.145, 0.231, 0.608);
+}

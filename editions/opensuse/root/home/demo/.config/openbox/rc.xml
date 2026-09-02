@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openbox_config xmlns="http://openbox.org/3.4/rc">
+    <resistance>
+        <screen_edge_strength>20</screen_edge_strength>
+    </resistance>
+    <focus>
+        <focusNew>yes</focusNew>
+        <followMouse>no</followMouse>
+    </focus>
+    <placement>
+        <policy>Smart</policy>
+        <center>yes</center>
+    </placement>
+    <applications>
+        <application class="*">
+            <decor>no</decor>
+            <shade>no</shade>
+            <border>no</border>
+        </application>
+    </applications>
+    <mouse>
+        <context name="Root">
+        </context>
+    </mouse>
+    <theme>
+        <name>liviOS</name>
+        <keepBorder>yes</keepBorder>
+        <borderColor>#3A3799</borderColor>
+    </theme>
+</openbox_config>
