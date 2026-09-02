@@ -30,6 +30,8 @@ bash-completion
 dhcp-client
 fontconfig
 fonts-config
+liberation-fonts   # provides /usr/share/fonts/truetype/LiberationMono-Bold.ttf,
+                    # which xgalaga-sdl's bundled font symlinks to (else TTF_OpenFont fails)
 patterns-openSUSE-base
 
 # --- Desktop / window management ---

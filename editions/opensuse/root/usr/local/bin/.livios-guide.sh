@@ -50,6 +50,7 @@ Commands:
 clear				Clear the screen
 gcompris-qt			Launch GCompris Games
 gdash				Launch GDash Game
+xgalaga-sdl			Launch XGalaga game
 shutdown			Shutdown the system
 reboot			Reboot the system
 ls				List directory contents

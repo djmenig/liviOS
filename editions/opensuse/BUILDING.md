@@ -132,6 +132,7 @@ Before running the build, confirm the edition is in a consistent state:
 | `config.sh` chown | `demo:demo` (not `demo:users`) | `grep 'chown' editions/opensuse/config.sh` |
 | GDash repo present | GDash RPM + repodata exist (referenced via `this://repos/gdash`) | `ls editions/opensuse/repos/gdash/repodata/repomd.xml` |
 | GDash config | OpenGL engine, fullscreen, GDash-TV shader | `cat editions/opensuse/root/home/demo/.config/gdash/gdash.ini` |
+| `liberation-fonts` | xgalaga-sdl's font symlinks to it; without it the game fails at launch | `grep 'liberation-fonts' editions/opensuse/appliance.kiwi` |
 | Overlay complete | All 31 overlay files present | `find editions/opensuse/root -type f \| wc -l` (expect `31`) |
 | Working tree clean | No uncommitted changes | `git status --short` (expect empty) |
 

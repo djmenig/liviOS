@@ -195,8 +195,13 @@ plymouth active inside the live initrd (KIWI stops it there by default).
 
 ### Package / game source change: `xgalaga-sdl`
 
-`xgalaga-sdl` is not in the main OSS repo; it comes from the openSUSE **games**
-repository, which is added as a second `<repository>` in `appliance.kiwi`.
+`xgalaga-sdl` is satisfied from the main Leap 15.6 OSS repo (no separate
+`games` repository — its Leap 15.6 branch was removed upstream). Its bundled
+`fonts/LiberationMono-Bold.ttf` is a symlink to
+`/usr/share/fonts/truetype/LiberationMono-Bold.ttf`, so the image also installs
+**`liberation-fonts`**; without it the game aborts at launch with
+`TTF_OpenFont ... Couldn't open ...`. There is no plain `xgalaga` binary — the
+command is **`xgalaga-sdl`** (also listed in the boot-time help guide).
 
 ### GDash (built from source)
 

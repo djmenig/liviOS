@@ -77,6 +77,9 @@
         <package name="dhcp-client"/>
         <package name="fontconfig"/>
         <package name="fonts-config"/>
+        <!-- xgalaga-sdl's bundled font is a symlink to this; without it the game
+             fails with TTF_OpenFont "Couldn't open ...LiberationMono-Bold.ttf" -->
+        <package name="liberation-fonts"/>
         <!-- LiviOS desktop / application stack -->
         <package name="openbox"/>
         <package name="rxvt-unicode"/>
