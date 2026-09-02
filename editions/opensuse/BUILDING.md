@@ -131,7 +131,8 @@ Before running the build, confirm the edition is in a consistent state:
 | `.xinitrc` xrdb merge | Runs `xrdb -merge` before `exec openbox-session` | `grep 'xrdb' editions/opensuse/root/home/demo/.xinitrc` |
 | `config.sh` chown | `demo:demo` (not `demo:users`) | `grep 'chown' editions/opensuse/config.sh` |
 | GDash repo present | GDash RPM + repodata exist (referenced via `this://repos/gdash`) | `ls editions/opensuse/repos/gdash/repodata/repomd.xml` |
-| Overlay complete | All 28 overlay files present | `find editions/opensuse/root -type f \| wc -l` (expect `28`) |
+| GDash config | OpenGL engine, fullscreen, GDash-TV shader | `cat editions/opensuse/root/home/demo/.config/gdash/gdash.ini` |
+| Overlay complete | All 31 overlay files present | `find editions/opensuse/root -type f \| wc -l` (expect `31`) |
 | Working tree clean | No uncommitted changes | `git status --short` (expect empty) |
 
 ---
@@ -213,8 +214,12 @@ Expected boot sequence:
 
 - GRUB2 boot menu with the **Linudore 64** theme (2 s timeout).
 - Boot splash: the custom **plymouth `livios`** theme with the planet image.
-- Landing on **tty1** autologin as user **`demo`**.
+- Landing on **tty1** autologin as user **`demo`** (password **`demo`** — only
+  needed for `sudo`, since login is automatic; the `root` account is locked).
 - `startx` launches an **Openbox + URxvt** C64-themed desktop.
+- Running `gdash` from a terminal opens it **fullscreen with the `GDash-TV`
+  shader** and returns to the shell on exit. Preferences are reached with **`O`**
+  (Options) / **`K`** (Keyboard) — see the edition README "GDash (C64 TV mode)".
 
 To confirm the GRUB theme, plymouth splash and LiviOS overlay actually made it
 into the ISO **without booting it**, see the "Verifying the build contents"

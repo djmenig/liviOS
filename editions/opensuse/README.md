@@ -67,7 +67,7 @@ grep -E 'themefile|GRUB_THEME' /mnt/iso/boot/grub2/grub.cfg
 
 # 2. The live root filesystem is a squashfs; confirm the overlay landed in it
 squashfs=$(find /mnt/iso -name '*.squashfs' | head -1)
-unsquashfs -ll "$squashfs" | grep -E 'home/demo/(\.Xresources|\.xinitrc)|config/openbox|themes/livios|plymouthd.conf'
+unsquashfs -ll "$squashfs" | grep -E 'home/demo/(\.Xresources|\.xinitrc)|config/openbox|themes/livios|plymouthd.conf|config/gdash'
 
 # 3. Confirm the plymouth theme is embedded in the initrd
 lsinitrd /mnt/iso/boot/x86_64/loader/initrd | grep -iE 'plymouth|livios'
@@ -149,6 +149,7 @@ openSUSE-specific overlay files (no shared/antiX source):
 | `etc/plymouth/plymouthd.conf` | selects the `livios` splash theme |
 | `etc/systemd/system/getty@tty1.service.d/autologin.conf` | tty1 autologin |
 | `home/demo/.xinitrc` | X session → `xrdb` merge + `openbox-session` |
+| `home/demo/.config/gdash/gdash.ini` | GDash: OpenGL engine, fullscreen, `GDash-TV` shader |
 | `usr/share/plymouth/themes/livios/*` | custom boot splash |
 
 ---
@@ -232,6 +233,26 @@ drivers are first-class.
 - **Openbox environment** — window-decoration-free session
 - **C64-themed URxvt terminal** — blue background, light-blue text, JuliaMono
 - **Autologin + startx on tty1** — lands directly on the desktop
-- **Demo user** (`demo`) with the full LiviOS dotfile set
+- **Demo user** (`demo`) with the full LiviOS dotfile set. Password is **`demo`**
+  (only needed for `sudo`, since tty1 autologins; the `root` account is locked)
 - **Curated applications** — xgalaga-sdl, gdash (Boulder Dash clone), gcompris-qt (educational)
 - **Sound** — ALSA utilities
+
+### GDash (C64 TV mode)
+
+GDash is preconfigured to behave like the original on a C64: launch it fullscreen
+and it returns to the shell when you quit.
+
+- **Fullscreen + OpenGL engine + `GDash-TV` shader** are baked into the demo
+  user's settings (`root/home/demo/.config/gdash/gdash.ini`).
+- The **`GDash-TV` shader only takes effect with the OpenGL engine**, and only if
+  the graphics hardware supports it. On real hardware it renders the scanlines /
+  tube look; inside a non-accelerated VM (e.g. QEMU virtio without GL) it is
+  silently skipped, though fullscreen still applies.
+- **Preferences/settings menu** (the GTK menu bar is *not* available in the
+  OpenGL engine):
+  - Press **`O`** during play for the **Options** menu (engine, shader, scale,
+    PAL emulation, sound…).
+  - Press **`K`** for **Keyboard options** (redefine keys).
+  - `F11` toggles fullscreen, `F9` sets the sound volume, `Ctrl+Q` quits.
+- Settings are saved to `~/.config/gdash/gdash.ini` and rewritten on exit.
