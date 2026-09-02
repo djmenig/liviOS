@@ -49,11 +49,14 @@ xorg-x11-driver-input
 # --- Boot splash (plymouth; fim not available in openSUSE OSS) ---
 plymouth
 plymouth-theme-bgrt
+plymouth-plugin-script  # 'script' module required by the custom 'livios' theme
 plymouth-branding-openSUSE
 
 # --- Utilities / polish ---
 unclutter
 dialog
+sudo            # demo user can run root commands
+python311-pyxdg # openbox-session xdg-autostart backend
 
 # --- Fonts ---
 xorg-x11-fonts
@@ -62,5 +65,5 @@ xorg-x11-fonts
 alsa-utils
 
 # --- Curated applications ---
-xgalaga        # in the openSUSE 'games' repo (added in appliance.kiwi)
+xgalaga-sdl    # in the openSUSE 'games' repo (added in appliance.kiwi)
 gcompris-qt

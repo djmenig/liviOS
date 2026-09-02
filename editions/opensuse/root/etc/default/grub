@@ -17,11 +17,11 @@ GRUB_CMDLINE_LINUX_DEFAULT="quiet loglevel=0 vt.global_cursor_default=0 vt.cur_d
 GRUB_CMDLINE_LINUX=""
 
 # Linudore 64 LOADING splash image (GRUB background)
-if [ -f /boot/grub/themes/linudore64/linudore64-bootmenu.png ]; then
-    GRUB_BACKGROUND=/boot/grub/themes/linudore64/linudore64-bootmenu.png
+if [ -f /boot/grub2/themes/linudore64/linudore64-bootmenu.png ]; then
+    GRUB_BACKGROUND=/boot/grub2/themes/linudore64/linudore64-bootmenu.png
 fi
 
-# Linudore 64 GRUB theme
-if [ -d /boot/grub/themes/linudore64/ ]; then
-    GRUB_THEME="/boot/grub/themes/linudore64/theme.txt"
+# Linudore 64 GRUB theme (KIWI: /boot/grub2/themes/<bootloader-theme>/theme.txt)
+if [ -d /boot/grub2/themes/linudore64/ ]; then
+    GRUB_THEME="/boot/grub2/themes/linudore64/theme.txt"
 fi

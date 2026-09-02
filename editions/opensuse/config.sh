@@ -29,17 +29,20 @@ baseSetRunlevel 3
 # demo user
 # ---------------------------------------------------------------------------
 # The 'demo' user is defined in appliance.kiwi (<users>). Make sure its home
-# exists and all LiviOS dotfiles in the overlay are owned by 'demo'.
+# exists and all LiviOS dotfiles in the overlay are owned by 'demo'. The
+# primary group is auto-created by useradd ('demo'), so chown to demo:demo.
 if id demo >/dev/null 2>&1 ; then
-    chown -R demo:users /home/demo 2>/dev/null || true
+    chown -R demo:demo /home/demo 2>/dev/null || true
 fi
 
 # ---------------------------------------------------------------------------
 # Boot splash (plymouth) -> LiviOS theme
 # ---------------------------------------------------------------------------
-# fim is not packaged in openSUSE, so LiviOS-openSUSE uses plymouth with a
-# custom theme ('livios') shipped in the root/ overlay. Register and select it
-# here; KIWI's <bootsplash-theme> only guaranteed a valid theme is installed.
+# fim is not packaged in openSUSE, so LiviOS-openSUSE uses plymouth with the
+# custom 'livios' theme shipped in the overlay (requires plymouth-plugin-script
+# for the 'script' module). The theme is already selected via the static
+# /etc/plymouth/plymouthd.conf overlay; plymouth-set-default-theme keeps the
+# system (dracut) initrd and config in sync with what plymouthd reads.
 if [ -d /usr/share/plymouth/themes/livios ] && \
    command -v plymouth-set-default-theme >/dev/null 2>&1 ; then
     plymouth-set-default-theme livios >/dev/null 2>&1 || true
@@ -55,8 +58,9 @@ fi
 # GRUB
 # ---------------------------------------------------------------------------
 # The custom Linudore 64 GRUB theme is shipped in the overlay at
-# /boot/grub/themes/linudore64. On openSUSE GRUB config is generated with
-# grub2-mkconfig (the /etc/default/grub overlay sets the theme/background).
+# /boot/grub2/themes/linudore64 and selected via <bootloader-theme> in
+# appliance.kiwi (KIWI regenerates the live-ISO grub.cfg against it). The
+# /etc/default/grub overlay sets the matching theme/background paths.
 update-bootloader --refresh 2>/dev/null || true
 
 # ---------------------------------------------------------------------------

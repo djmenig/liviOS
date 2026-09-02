@@ -220,9 +220,9 @@ Expected boot sequence:
 | Build fails partway through | Read the log: `./build/image-root.log`; re-run with `--debug --logfile stdout` to see the failing step |
 | `command not found` for a host tool (dracut, xorriso, …) | `kiwi-systemdeps-core`/specific deps not installed on host. Run step 2.2/2.3 |
 | Target directory not empty error | `rm -rf builds/opensuse` before rebuilding |
-| OpenSUSE *games* repo trouble | The games repo is declared `imageonly`, so it must be reachable during the build but is not carried into the image. If a mirror is down, pass `--ignore-repos-used-for-build` to make it non-fatal (provided `xgalaga` is otherwise resolvable) |
+| OpenSUSE *games* repo trouble | The games repo is declared `imageonly`, so it must be reachable during the build but is not carried into the image. If a mirror is down, pass `--ignore-repos-used-for-build` to make it non-fatal (provided `xgalaga-sdl` is otherwise resolvable) |
 | Xorg does not start in QEMU (black screen / no tty7) | Add `xorg-x11-driver-video` (or ensure QEMU's `modesetting`/`qxl` driver is present). Check `~demo/.local/share/xorg/Xorg.0.log` (or `/var/log/Xorg.0.log`) for the failing driver |
-| plymouth `livios` theme does not render | Verify `/usr/share/plymouth/themes/livios/` exists and `plymouth-set-default-theme livios` ran in `config.sh`. Fall back to the `bgrt` theme and edit `/etc/plymouth/plymouthd.conf` |
+| plymouth `livios` theme does not render | Verify `/usr/share/plymouth/themes/livios/` exists, `plymouth-plugin-script` is installed (the `script` module the theme needs), `plymouth-set-default-theme livios` ran in `config.sh`, and `rd.kiwi.allow_plymouth` is on the kernel cmdline (KIWI stops plymouth in the initrd by default). Fall back to the `bgrt` theme by editing `/etc/plymouth/plymouthd.conf` |
 | `demo` dotfiles owned by root in image | `config.sh` chowns `/home/demo` after the overlay is applied; confirm that step ran (early post-boot errors usually point here) |
 
 ---

@@ -42,7 +42,7 @@ The resulting image is written to the target directory with a `.iso` suffix,
 e.g. `livios-opensuse.x86_64-1.0.0.iso`.
 
 The openSUSE **games** repository is declared as a second, `imageonly`
-repository (used to satisfy `xgalaga` during the build but not carried into
+repository (used to satisfy `xgalaga-sdl` during the build but not carried into
 the running system).
 
 ### Testing the ISO
@@ -52,6 +52,30 @@ qemu-system-x86_64 \
   -cdrom builds/opensuse/livios-opensuse.x86_64-1.0.0.iso \
   -m 4096
 ```
+
+### Verifying the build contents
+
+After a build, you can confirm the LiviOS overlay, GRUB theme and splash made
+it into the image without booting it:
+
+```sh
+# 1. Mount the ISO and check the GRUB theme + generated live grub.cfg
+sudo mount -o loop builds/opensuse/livios-opensuse.x86_64-1.0.0.iso /mnt/iso
+ls /mnt/iso/boot/grub2/themes/linudore64/
+grep -E 'themefile|GRUB_THEME' /mnt/iso/boot/grub2/grub.cfg
+
+# 2. The live root filesystem is a squashfs; confirm the overlay landed in it
+squashfs=$(find /mnt/iso -name '*.squashfs' | head -1)
+unsquashfs -ll "$squashfs" | grep -E 'home/demo/(\.Xresources|\.xinitrc)|config/openbox|themes/livios|plymouthd.conf'
+
+# 3. Confirm the plymouth theme is embedded in the initrd
+lsinitrd /mnt/iso/boot/x86_64/loader/initrd | grep -iE 'plymouth|livios'
+sudo umount /mnt/iso
+```
+
+Expected: step 1 prints `theme.txt` + a `themefile ... linudore64` line, step 2
+lists the dotfiles/theme/plymouth files from the overlay, and step 3 shows the
+`livios` plymouth theme inside the initrd.
 
 ---
 
@@ -65,8 +89,10 @@ editions/opensuse/
 ├── config.sh           # chroot customizations run at end of 'prepare'
 ├── packages.list       # openSUSE RPM package list (mirrors appliance.kiwi)
 ├── root/               # filesystem overlay (applied into the image)
-│   ├── boot/grub/...           # GRUB theme + splash background
+│   ├── boot/grub2/themes/linudore64/  # custom GRUB theme (KIWI copies it to ISO boot)
+│   ├── boot/grub/livios-grub-loading.png  # GRUB loading background
 │   ├── etc/default/grub        # openSUSE-flavored GRUB config
+│   ├── etc/plymouth/plymouthd.conf  # selects the 'livios' splash theme
 │   ├── etc/systemd/system/...  # getty@tty1 autologin override
 │   ├── home/demo/...           # LiviOS dotfiles, X session, Openbox theme
 │   └── usr/share/plymouth/...  # custom 'livios' plymouth splash theme
@@ -112,15 +138,16 @@ Mapping (source → overlay destination):
 | `files/JuliaMono-Black.ttf` | `root/home/demo/.fonts/` |
 | `files/livios-grub-loading.png` | `root/boot/grub/` |
 | `files/livios-splash-planets.png` | `root/usr/share/images/` + plymouth theme |
-| `assets/grub/linudore64/` | `root/boot/grub/themes/linudore64/` |
+| `assets/grub/linudore64/` | `root/boot/grub2/themes/linudore64/` |
 
 openSUSE-specific overlay files (no shared/antiX source):
 
 | Overlay file | Purpose |
 |---|---|
 | `etc/default/grub` | openSUSE-flavored GRUB config |
+| `etc/plymouth/plymouthd.conf` | selects the `livios` splash theme |
 | `etc/systemd/system/getty@tty1.service.d/autologin.conf` | tty1 autologin |
-| `home/demo/.xinitrc` | X session → `openbox-session` |
+| `home/demo/.xinitrc` | X session → `xrdb` merge + `openbox-session` |
 | `usr/share/plymouth/themes/livios/*` | custom boot splash |
 
 ---
@@ -134,8 +161,8 @@ Here is exactly how the openSUSE edition reproduces each behavior:
 
 | antiX behavior | antiX mechanism | openSUSE mechanism |
 |---|---|---|
-| Custom GRUB theme + hidden menu | `/etc/default/grub` (antiX/MX flavor) | `/etc/default/grub` (openSUSE flavor) + `assets/grub/linudore64` theme |
-| Boot splash (planet image, 4 s) | runit `/etc/runit/1` runs `fim` | plymouth custom theme `livios` (background image); no `fim` |
+| Custom GRUB theme + hidden menu | `/etc/default/grub` (antiX/MX flavor) | `<bootloader-theme>linudore64</bootloader-theme>` + `assets/grub/linudore64` at `/boot/grub2/themes/` |
+| Boot splash (planet image, 4 s) | runit `/etc/runit/1` runs `fim` | plymouth custom theme `livios` + `plymouth-plugin-script`; `rd.kiwi.allow_plymouth` keeps it in the live initrd; no `fim` |
 | tty1 autologin | runit getty `run` script (`agetty --autologin olivia`) or sysvinit `inittab` | `getty@tty1.service.d/autologin.conf` (`agetty --autologin demo`) |
 | Auto-start X on tty1 | `~/.bash_profile` → `exec startx` | `~/.bash_profile` → `exec startx` (same), plus `~/.xinitrc` |
 | X session script | `/etc/X11/xinit/xinitrc` → `. /etc/X11/Xsession` (Debian) | `~/.xinitrc` → `exec openbox-session` (openSUSE has no `/etc/X11/Xsession`) |
@@ -157,13 +184,16 @@ Here is exactly how the openSUSE edition reproduces each behavior:
 The antiX edition uses `fim` (a framebuffer image viewer) to paint the planet
 splash. `fim` is **not packaged** in openSUSE's OSS repository, so the openSUSE
 edition uses **plymouth** with a custom `livios` theme that renders the same
-planet image as a plymouth background. `plymouth`, `plymouth-theme-bgrt`, and
+planet image as a plymouth background. `plymouth`, `plymouth-theme-bgrt`,
+`plymouth-plugin-script` (the `script` module the theme needs), and
 `plymouth-branding-openSUSE` come from OSS; the custom theme lives in the
-overlay and is selected in `config.sh`.
+overlay and is selected via `/etc/plymouth/plymouthd.conf` +
+`config.sh`. The kernel cmdline includes `rd.kiwi.allow_plymouth` so KIWI keeps
+plymouth active inside the live initrd (KIWI stops it there by default).
 
-### Package / game source change: `xgalaga`
+### Package / game source change: `xgalaga-sdl`
 
-`xgalaga` is not in the main OSS repo; it comes from the openSUSE **games**
+`xgalaga-sdl` is not in the main OSS repo; it comes from the openSUSE **games**
 repository, which is added as a second `<repository>` in `appliance.kiwi`.
 
 ### Release choice: Leap 15.6 (not 16.0)
@@ -183,5 +213,5 @@ drivers are first-class.
 - **C64-themed URxvt terminal** — blue background, light-blue text, JuliaMono
 - **Autologin + startx on tty1** — lands directly on the desktop
 - **Demo user** (`demo`) with the full LiviOS dotfile set
-- **Curated applications** — xgalaga, gcompris-qt (educational)
+- **Curated applications** — xgalaga-sdl, gcompris-qt (educational)
 - **Sound** — ALSA utilities

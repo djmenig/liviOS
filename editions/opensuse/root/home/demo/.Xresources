@@ -1,10 +1,4 @@
-! xcalc settings
-# include ".config/xresources.d/xcalc/xcalc.conf"
-
-! urxvt colours 
-# include ".config/xresources.d/xcolours/antix.conf"
-
-! --- liviOS Terminal ---
+! --- LiviOS Terminal ---
 ! Font
 !URxvt*font: xft:SUSE Mono ExtraBold:style=ExtraBold:pixelsize=22:antialias=true
 URxvt*font: xft:JuliaMono Black:style=Black:pixelsize=24:antialias=true

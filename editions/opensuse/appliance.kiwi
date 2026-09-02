@@ -15,10 +15,15 @@
         <timezone>Etc/UTC</timezone>
         <rpm-excludedocs>true</rpm-excludedocs>
         <rpm-check-signatures>false</rpm-check-signatures>
-        <!-- plymouth bootsplash; the custom 'livios' theme is selected in config.sh -->
+        <!-- plymouth bootsplash; the custom 'livios' theme is selected in config.sh.
+             rd.kiwi.allow_plymouth keeps plymouth active in the live initrd (KIWI
+             stops it by default), so the splash shows during the initrd phase. -->
         <bootsplash-theme>bgrt</bootsplash-theme>
-        <bootloader-theme>openSUSE</bootloader-theme>
-        <type image="iso" flags="overlay" firmware="efi" kernelcmdline="quiet loglevel=0 vt.global_cursor_default=0 vt.cur_default=6 console=tty2 splash" hybridpersistent_filesystem="ext4" hybridpersistent="true">
+        <!-- 'linudore64' is the custom GRUB theme shipped in root/boot/grub2/themes/;
+             KIWI generates the live-ISO grub.cfg with GRUB_THEME=/boot/grub2/themes/<this>/theme.txt
+             and copies that theme dir onto the ISO boot area. -->
+        <bootloader-theme>linudore64</bootloader-theme>
+        <type image="iso" flags="overlay" firmware="efi" kernelcmdline="quiet loglevel=0 vt.global_cursor_default=0 vt.cur_default=6 console=tty2 splash rd.kiwi.allow_plymouth" hybridpersistent_filesystem="ext4" hybridpersistent="true">
             <bootloader name="grub2" timeout="2"/>
         </type>
     </preferences>
@@ -32,7 +37,7 @@
         <source path="obsrepositories:/"/>
     </repository>
 
-    <!-- openSUSE 'games' repository: provides xgalaga (not in main OSS).
+    <!-- openSUSE 'games' repository: provides xgalaga-sdl (not in main OSS).
          Kept imageonly="true" so it is used to satisfy the image build but is
          not carried into the running system's zypper repository list. -->
     <repository type="rpm-md" imageonly="true">
@@ -54,6 +59,8 @@
         <package name="dracut-kiwi-live"/>
         <package name="plymouth"/>
         <package name="plymouth-theme-bgrt"/>
+        <!-- 'script' module plugin required by the custom 'livios' plymouth theme -->
+        <package name="plymouth-plugin-script"/>
         <package name="plymouth-branding-openSUSE"/>
         <package name="timezone"/>
         <package name="tar"/>
@@ -78,9 +85,13 @@
         <package name="xorg-x11-fonts"/>
         <package name="unclutter"/>
         <package name="dialog"/>
+        <!-- admin: demo user needs sudo to run root commands on the live system -->
+        <package name="sudo"/>
+        <!-- openbox-session xdg-autostart backend (openSUSE Leap 15.6 = python311) -->
+        <package name="python311-pyxdg"/>
         <package name="alsa-utils"/>
         <package name="gcompris-qt"/>
-        <package name="xgalaga"/>
+        <package name="xgalaga-sdl"/>
     </packages>
 
     <packages type="bootstrap">
