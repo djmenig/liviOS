@@ -31,6 +31,23 @@ zypper --gpg-auto-import-keys refresh
 zypper in -y python3-kiwi xorriso syslinux dosfstools e2fsprogs squashfs
 ```
 
+## Pre-build checklist
+
+```sh
+xmllint --noout editions/opensuse/appliance.kiwi          # XML valid
+bash -n editions/opensuse/config.sh && bash -n editions/opensuse/scripts/build.sh  # syntax OK
+grep 'bootloader-theme.*linudore64' editions/opensuse/appliance.kiwi               # GRUB theme
+grep 'rd.kiwi.allow_plymouth' editions/opensuse/appliance.kiwi                     # splash in initrd
+grep plymouth-plugin-script editions/opensuse/appliance.kiwi                        # script plugin
+grep -E 'sudo|pyxdg' editions/opensuse/appliance.kiwi                              # sudo + xdg
+ls editions/opensuse/root/boot/grub2/themes/linudore64/theme.txt                    # theme at grub2 path
+grep '# include' editions/opensuse/root/home/demo/.Xresources || echo "no antiX includes (good)"
+grep xrdb editions/opensuse/root/home/demo/.xinitrc                                # xrdb merge present
+find editions/opensuse/root -type f | wc -l                                        # 28 overlay files
+```
+
+All checks should pass (no `# include` hits, 28 files).
+
 ## Build
 
 ```sh

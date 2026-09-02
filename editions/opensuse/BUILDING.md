@@ -112,6 +112,29 @@ Then run the build with the sources mounted at `/build` (see section 4, but set
 
 ---
 
+## Pre-build checklist
+
+Before running the build, confirm the edition is in a consistent state:
+
+| Check | What to verify | How |
+|---|---|---|
+| `appliance.kiwi` XML valid | Well-formed XML, no schema errors | `xmllint --noout editions/opensuse/appliance.kiwi` |
+| `config.sh` syntax | No shell syntax errors | `bash -n editions/opensuse/config.sh` |
+| `build.sh` syntax | Wrapper script is valid | `bash -n editions/opensuse/scripts/build.sh` |
+| `bootloader-theme` | Set to `linudore64` | `grep bootloader-theme editions/opensuse/appliance.kiwi` |
+| `rd.kiwi.allow_plymouth` | On kernel cmdline (keeps splash in live initrd) | `grep 'rd.kiwi.allow_plymouth' editions/opensuse/appliance.kiwi` |
+| `plymouth-plugin-script` | In the `image` package list | `grep plymouth-plugin-script editions/opensuse/appliance.kiwi` |
+| `sudo` + `python311-pyxdg` | In the `image` package list | `grep -E 'sudo\|pyxdg' editions/opensuse/appliance.kiwi` |
+| GRUB theme at `grub2` path | Theme files under `root/boot/grub2/themes/linudore64/` | `ls editions/opensuse/root/boot/grub2/themes/linudore64/theme.txt` |
+| `plymouthd.conf` | Static daemon config selecting `livios` | `cat editions/opensuse/root/etc/plymouth/plymouthd.conf` |
+| `.Xresources` clean | No antiX `# include` lines (they break xrdb) | `grep -c '# include' editions/opensuse/root/home/demo/.Xresources` (expect `0`) |
+| `.xinitrc` xrdb merge | Runs `xrdb -merge` before `exec openbox-session` | `grep 'xrdb' editions/opensuse/root/home/demo/.xinitrc` |
+| `config.sh` chown | `demo:demo` (not `demo:users`) | `grep 'chown' editions/opensuse/config.sh` |
+| Overlay complete | All 28 overlay files present | `find editions/opensuse/root -type f \| wc -l` (expect `28`) |
+| Working tree clean | No uncommitted changes | `git status --short` (expect empty) |
+
+---
+
 ## 4. Run the build
 
 The appliance's primary `<repository>` is `obsrepositories:/`, which **only
