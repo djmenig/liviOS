@@ -1,5 +1,5 @@
 /builds/
-# GDash build outputs (regenerate with packages/gdash/build-gdash-rpm.sh)
-/packages/gdash/repo/
+# GDash build scratch dirs (the final repo lives at editions/opensuse/repos/gdash/
+# and IS committed, since appliance.kiwi references it via this://repos/gdash)
 /packages/gdash/rpmbuild/
 /packages/gdash/container-build/

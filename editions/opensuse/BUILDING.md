@@ -130,6 +130,7 @@ Before running the build, confirm the edition is in a consistent state:
 | `.Xresources` clean | No antiX `# include` lines (they break xrdb) | `grep -c '# include' editions/opensuse/root/home/demo/.Xresources` (expect `0`) |
 | `.xinitrc` xrdb merge | Runs `xrdb -merge` before `exec openbox-session` | `grep 'xrdb' editions/opensuse/root/home/demo/.xinitrc` |
 | `config.sh` chown | `demo:demo` (not `demo:users`) | `grep 'chown' editions/opensuse/config.sh` |
+| GDash repo present | GDash RPM + repodata exist (referenced via `this://repos/gdash`) | `ls editions/opensuse/repos/gdash/repodata/repomd.xml` |
 | Overlay complete | All 28 overlay files present | `find editions/opensuse/root -type f \| wc -l` (expect `28`) |
 | Working tree clean | No uncommitted changes | `git status --short` (expect empty) |
 
@@ -247,7 +248,7 @@ section of the edition [`README.md`](README.md).
 | Build fails partway through | Read the log: `./build/image-root.log`; re-run with `--debug --logfile stdout` to see the failing step |
 | `command not found` for a host tool (dracut, xorriso, …) | `kiwi-systemdeps-core`/specific deps not installed on host. Run step 2.2/2.3 |
 | Target directory not empty error | `rm -rf builds/opensuse` before rebuilding |
-| OpenSUSE *games* repo trouble | The games repo is declared `imageonly`, so it must be reachable during the build but is not carried into the image. If a mirror is down, pass `--ignore-repos-used-for-build` to make it non-fatal (provided `xgalaga-sdl` is otherwise resolvable) |
+| OpenSUSE *games* repo trouble | The games repo is declared without `imageonly`/`imageinclude` (build-only), so it is used during the build but not carried into the image. If a mirror is down, pass `--ignore-repos-used-for-build` to make it non-fatal (provided `xgalaga-sdl` is otherwise resolvable) |
 | Xorg does not start in QEMU (black screen / no tty7) | Add `xorg-x11-driver-video` (or ensure QEMU's `modesetting`/`qxl` driver is present). Check `~demo/.local/share/xorg/Xorg.0.log` (or `/var/log/Xorg.0.log`) for the failing driver |
 | plymouth `livios` theme does not render | Verify `/usr/share/plymouth/themes/livios/` exists, `plymouth-plugin-script` is installed (the `script` module the theme needs), `plymouth-set-default-theme livios` ran in `config.sh`, and `rd.kiwi.allow_plymouth` is on the kernel cmdline (KIWI stops plymouth in the initrd by default). Fall back to the `bgrt` theme by editing `/etc/plymouth/plymouthd.conf` |
 | GRUB theme missing / plain menu | The theme must live at `/usr/share/grub2/themes/linudore64/` in the overlay (KIWI searches this path) and `<bootloader-theme>linudore64</bootloader-theme>` must be set in `appliance.kiwi`. KIWI copies the theme to the ISO boot area and overwrites `/etc/default/grub` |

@@ -18,12 +18,14 @@
 # gdash.spec, on a host with access to the Leap 15.6 SDK repos.
 #
 # Output:
-#   packages/gdash/repo/   — RPM-MD repository (consumed by KIWI via local path)
+#   editions/opensuse/repos/gdash/   — RPM-MD repo (referenced by appliance.kiwi
+#                                       via this://repos/gdash)
 
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-REPO_DIR="${SCRIPT_DIR}/repo"
+# Description-relative repo location (referenced by appliance.kiwi via this://)
+REPO_DIR="$(cd "${SCRIPT_DIR}/../../editions/opensuse/repos/gdash" && pwd)"
 RPMBUILD_DIR="${SCRIPT_DIR}/rpmbuild"
 WORK_DIR="${SCRIPT_DIR}/container-build"
 MODE="${1:-container}"
@@ -98,4 +100,4 @@ echo "=== Done ==="
 echo "RPMs:     ${REPO_DIR}/"
 echo "Repo XML: ${REPO_DIR}/repodata/repomd.xml"
 echo ""
-echo "The appliance.kiwi already references this repo as a file:// source."
+echo "The appliance.kiwi already references this repo via this://repos/gdash"

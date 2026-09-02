@@ -38,17 +38,22 @@
     </repository>
 
     <!-- openSUSE 'games' repository: provides xgalaga-sdl (not in main OSS).
-         Kept imageonly="true" so it is used to satisfy the image build but is
-         not carried into the running system's zypper repository list. -->
-    <repository type="rpm-md" imageonly="true">
+         No imageonly/imageinclude attribute so it is used at build time to
+         satisfy the image package set, but is not carried into the running
+         system's zypper repository list. -->
+    <repository type="rpm-md">
         <source path="https://download.opensuse.org/repositories/games/15.6/"/>
     </repository>
 
     <!-- LiviOS local repository: provides GDash (built from source).
+         Uses this:// so the path resolves relative to the image description
+         directory (editions/opensuse/repos/gdash), which is portable across
+         checkout locations and build hosts.
          Run packages/gdash/build-gdash-rpm.sh before building the ISO.
-         Kept imageonly="true" like the games repo. -->
-    <repository type="rpm-md" imageonly="true">
-        <source path="file:///home/djmenig/Code-Playground/djmenig/liviOS/liviOS-repo-root/packages/gdash/repo"/>
+         No imageonly/imageinclude attribute so it is used at build time but
+         is not carried into the running system's zypper repository list. -->
+    <repository type="rpm-md">
+        <source path="this://repos/gdash"/>
     </repository>
 
     <!-- Live ISO / boot stack + LiviOS dependencies (see packages.list) -->

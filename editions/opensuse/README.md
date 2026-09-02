@@ -41,9 +41,11 @@ sudo kiwi-ng system build \
 The resulting image is written to the target directory with a `.iso` suffix,
 e.g. `livios-opensuse.x86_64-1.0.0.iso`.
 
-The openSUSE **games** repository is declared as a second, `imageonly`
-repository (used to satisfy `xgalaga-sdl` during the build but not carried into
-the running system).
+The openSUSE **games** repository is declared as a second repository (no
+`imageonly`/`imageinclude` attribute), so it is used to satisfy `xgalaga-sdl`
+during the build but is not carried into the running system's zypper config.
+The GDash RPM-MD repo is referenced the same way via `this://repos/gdash`
+(see below).
 
 ### Testing the ISO
 
@@ -201,15 +203,19 @@ repository, which is added as a second `<repository>` in `appliance.kiwi`.
 GDash is a Boulder Dash clone not packaged in any openSUSE repository. The
 LiviOS edition builds it from a git snapshot via `packages/gdash/`. Run
 `packages/gdash/build-gdash-rpm.sh` (defaults to a Leap 15.6 podman container)
-before building the ISO — it produces a local RPM-MD repo that KIWI consumes.
+before building the ISO — it produces the RPM-MD repo at
+`editions/opensuse/repos/gdash/`. `appliance.kiwi` references it via
+`this://repos/gdash`, which KIWI resolves relative to the image description
+directory, so the build works from any checkout location or host.
 
 > **Why the container route?** GDash links against SDL2, and the target image is
 > Leap 15.6 (real SDL2). Tumbleweed/Leap 16 ship only an SDL2→SDL3 compatibility
 > shim with no `sdl2.pc` dev files, so an RPM built on those hosts would be
 > binary-incompatible with the Leap 15.6 image. Building inside an
 > `opensuse/leap:15.6` container guarantees the correct SDK. The built RPM/repo
-> is a generated artifact (gitignored); regenerate with the script after a fresh
-> clone. **To-do:** publish GDash in the future LiviOS OBS project.
+> is committed under `editions/opensuse/repos/gdash/` so the ISO builds on a
+> fresh clone; regenerate it with the script if you bump the GDash version.
+> **To-do:** publish GDash in the future LiviOS OBS project.
 
 ### Release choice: Leap 15.6 (not 16.0)
 
