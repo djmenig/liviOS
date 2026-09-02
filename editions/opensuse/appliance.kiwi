@@ -29,7 +29,7 @@
     </preferences>
 
     <users>
-        <user password="$1$wYJUgpM5$RXMMeASDc035eX.NbYWFl0" home="/home/demo" name="demo" groups="demo,audio,video,input"/>
+        <user password="$6$rounds=656000$livios$NRVqVdtobp9yunGGGug7pyxn4dfPxOHIFUBReUPgFkxve/TsKEV80bHVWtBWKBC20OJrwYgvy/t9C/J2CXChE." home="/home/demo" name="demo" groups="demo,audio,video,input"/>
         <user password="*" home="/root" name="root" groups="root"/>
     </users>
 
