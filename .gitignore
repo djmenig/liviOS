@@ -1,1 +1,5 @@
 /builds/
+# GDash build outputs (regenerate with packages/gdash/build-gdash-rpm.sh)
+/packages/gdash/repo/
+/packages/gdash/rpmbuild/
+/packages/gdash/container-build/

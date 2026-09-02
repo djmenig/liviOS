@@ -200,9 +200,16 @@ repository, which is added as a second `<repository>` in `appliance.kiwi`.
 
 GDash is a Boulder Dash clone not packaged in any openSUSE repository. The
 LiviOS edition builds it from a git snapshot via `packages/gdash/`. Run
-`packages/gdash/build-gdash-rpm.sh` before building the ISO — it produces a
-local RPM-MD repo that KIWI consumes. **To-do:** publish GDash in the future
-LiviOS OBS project.
+`packages/gdash/build-gdash-rpm.sh` (defaults to a Leap 15.6 podman container)
+before building the ISO — it produces a local RPM-MD repo that KIWI consumes.
+
+> **Why the container route?** GDash links against SDL2, and the target image is
+> Leap 15.6 (real SDL2). Tumbleweed/Leap 16 ship only an SDL2→SDL3 compatibility
+> shim with no `sdl2.pc` dev files, so an RPM built on those hosts would be
+> binary-incompatible with the Leap 15.6 image. Building inside an
+> `opensuse/leap:15.6` container guarantees the correct SDK. The built RPM/repo
+> is a generated artifact (gitignored); regenerate with the script after a fresh
+> clone. **To-do:** publish GDash in the future LiviOS OBS project.
 
 ### Release choice: Leap 15.6 (not 16.0)
 

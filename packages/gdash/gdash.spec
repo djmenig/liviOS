@@ -45,8 +45,9 @@ autoreconf -fi
 %install
 %make_install
 desktop-file-validate %{buildroot}%{_datadir}/applications/gdash.desktop || true
+%find_lang gdash
 
-%files
+%files -f gdash.lang
 %license COPYING COPYING.SDL COPYING.GTK COPYING.HQX
 %doc README
 %{_bindir}/gdash
