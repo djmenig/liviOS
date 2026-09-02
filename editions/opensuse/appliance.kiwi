@@ -37,14 +37,6 @@
         <source path="obsrepositories:/"/>
     </repository>
 
-    <!-- openSUSE 'games' repository: provides xgalaga-sdl (not in main OSS).
-         No imageonly/imageinclude attribute so it is used at build time to
-         satisfy the image package set, but is not carried into the running
-         system's zypper repository list. -->
-    <repository type="rpm-md">
-        <source path="https://download.opensuse.org/repositories/games/15.6/"/>
-    </repository>
-
     <!-- LiviOS local repository: provides GDash (built from source).
          Uses this:// so the path resolves relative to the image description
          directory (editions/opensuse/repos/gdash), which is portable across

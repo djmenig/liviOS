@@ -41,11 +41,10 @@ sudo kiwi-ng system build \
 The resulting image is written to the target directory with a `.iso` suffix,
 e.g. `livios-opensuse.x86_64-1.0.0.iso`.
 
-The openSUSE **games** repository is declared as a second repository (no
-`imageonly`/`imageinclude` attribute), so it is used to satisfy `xgalaga-sdl`
-during the build but is not carried into the running system's zypper config.
-The GDash RPM-MD repo is referenced the same way via `this://repos/gdash`
-(see below).
+The only extra repository beyond the primary Leap 15.6 OSS repo is the LiviOS
+local RPM-MD repo for GDash (referenced via `this://repos/gdash`, see below).
+`xgalaga-sdl` is satisfied from the main OSS repo, so no external `games`
+repository is needed (its openSUSE_Leap_15.6 branch no longer exists upstream).
 
 ### Testing the ISO
 
