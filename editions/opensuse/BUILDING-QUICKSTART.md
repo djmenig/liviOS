@@ -60,6 +60,21 @@ qemu-system-x86_64 -enable-kvm \
 Expect: GRUB (Linudore 64) → plymouth `livios` splash → tty1 `demo` autologin →
 Openbox/URxvt desktop.
 
+## Verify (optional, without booting)
+
+```sh
+sudo mount -o loop builds/opensuse/livios-opensuse.x86_64-1.0.0.iso /mnt/iso
+ls /mnt/iso/boot/grub2/themes/linudore64/
+grep -E 'themefile|GRUB_THEME' /mnt/iso/boot/grub2/grub.cfg
+unsquashfs -ll "$(find /mnt/iso -name '*.squashfs' | head -1)" | grep -E '\.Xresources|\.xinitrc|themes/livios|plymouthd.conf'
+lsinitrd /mnt/iso/boot/x86_64/loader/initrd | grep -i plymouth
+sudo umount /mnt/iso
+```
+
+Theme + live `grub.cfg` should reference the `linudore64` GRUB theme, the
+squashfs should list the LiviOS dotfiles/plymouth overlay, and the initrd should
+contain the `livios` plymouth theme.
+
 ## Rebuild reminder
 
 KIWI NG does not clear the target dir — wipe it first:

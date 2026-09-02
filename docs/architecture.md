@@ -68,6 +68,6 @@ installed antiX‑core machine without needing the repository present.
 
 ## Future Architecture Goals
 - Validate `install.sh` on real antiX‑core 32‑bit hardware
-- openSUSE Edition as a KIWI‑based live ISO (64‑bit)
+- openSUSE Edition: expand the initial KIWI‑based live ISO (64‑bit) into an
+  OBS‑built, openQA‑tested offering
 - Unified tooling and documentation across editions where it makes sense
-- openQA integration for the openSUSE Edition

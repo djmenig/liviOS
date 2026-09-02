@@ -18,7 +18,7 @@ LiviOS is developed in multiple editions:
   Delivered as a **post‑install installer** that runs on top of a minimal
   antiX‑core system (no live ISO).
 - **openSUSE Edition** — engineering‑grade, 64‑bit, leveraging KIWI and modern
-  tooling, delivered as a **live ISO** *(planned)*.
+  tooling, delivered as an initial **live ISO**.
 
 ---
 
@@ -35,8 +35,9 @@ Each edition chooses a delivery model that fits its target hardware and tooling:
     sysvinit,
   - refreshes fonts and re‑runs `update-grub`.
 
-- **openSUSE (64‑bit) — Image model.** A normal KIWI‑based live ISO build,
-  produced on a build service (OBS). *(Planned.)*
+- **openSUSE (64‑bit) — Image model.** A KIWI‑based live ISO build produced
+  locally with `kiwi-ng` on a Leap 15.6 base (OBS packaging remains a future
+  step). *(Initial edition shipped.)*
 
 ---
 

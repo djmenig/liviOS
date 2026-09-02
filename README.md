@@ -15,7 +15,7 @@ focused on reproducibility, clarity, and thoughtful design.
 - Unique custom UX throughout (GRUB theme, splash screen, terminal theme, Openbox layout)  
 - Ultra‑lightweight, 32‑bit compatible — *antiX Edition*  
 - Distraction‑free environment for learning and exploration  
-- Multiple editions (antiX now, openSUSE planned)
+- Multiple editions (antiX and openSUSE)
 
 ---
 
@@ -27,8 +27,8 @@ LiviOS is delivered differently per edition, based on the target hardware:
   Instead, you install a minimal **antiX‑core** system and then run the LiviOS
   installer script, which copies all LiviOS files into place and configures the
   boot experience. See [antiX Edition](editions/antix/README.md).
-- **openSUSE Edition (64‑bit): live ISO.** Planned as a KIWI‑based 64‑bit live
-  image build. See [openSUSE Edition](editions/opensuse/README.md).
+- **openSUSE Edition (64‑bit): live ISO.** Shipped as an initial KIWI‑NG‑based
+  64‑bit live image build. See [openSUSE Edition](editions/opensuse/README.md).
 
 ---
 
@@ -64,7 +64,7 @@ files and their exact installed locations. See:
 
 ## 📦 Release Status
 - antiX Edition: Active development (post‑install installer)  
-- openSUSE Edition: Planned (KIWI live ISO)  
+- openSUSE Edition: Initial buildable live ISO (KIWI‑NG, Leap 15.6 base)  
 - File manifest: Complete for antiX  
 - Installer pipeline: Under review (not yet validated on real hardware)
 

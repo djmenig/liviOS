@@ -32,5 +32,7 @@ antiX‑core installation.
 reads the CSV and copies each file in `files/` to its destination.
 
 ## Notes
-- The manifest currently covers the antiX Edition.  
-- The openSUSE Edition will receive its own manifest once development begins.
+- The manifest currently covers the antiX Edition.
+- The openSUSE Edition does not use a file manifest; its KIWI `root/` overlay
+  plays that role. See the file‑provenance section of
+  [`editions/opensuse/README.md`](../../editions/opensuse/README.md).
